@@ -22,6 +22,8 @@ public class PlayerGUI extends JFrame {
    JButton stopButton = new JButton();
    JButton nextButton = new JButton();
    JButton shuffleButton = new JButton();
+   JPanel currentSongPanel = new JPanel();
+   JLabel currentSong = new JLabel();
 
    public void GUIControlls() {
       PlayerGUI musicController = new PlayerGUI();
@@ -101,8 +103,7 @@ public class PlayerGUI extends JFrame {
             }
          }
       });
-      
-      
+            
       nextButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent event) {            
             if (isPlaying) {
@@ -146,7 +147,6 @@ public class PlayerGUI extends JFrame {
    
    private void contentLayout(PlayerGUI musicController) {
       JPanel content = new JPanel();
-      content.setLayout(new GridLayout(2, 5));
       
       previousButton.setIcon(new ImageIcon("previousButton.png"));
       previousButton.setBackground(Color.WHITE);
@@ -160,7 +160,7 @@ public class PlayerGUI extends JFrame {
       shuffleButton.setIcon(new ImageIcon("shuffleButton.png"));
       shuffleButton.setBackground(Color.WHITE);
       validate();
-
+            
       content.add(new JLabel("Previous"));
       content.add(new JLabel("Play/Pause"));
       content.add(new JLabel("Stop"));      
@@ -172,13 +172,25 @@ public class PlayerGUI extends JFrame {
       content.add(playPauseButton);
       content.add(stopButton);      
       content.add(nextButton);
-      content.add(shuffleButton);   
-      musicController.setContentPane(content);
+      content.add(shuffleButton);  
+      
+      content.setLayout(new GridLayout(2, 5, 2, 0)); 
+      
+      currentSongPanel.add(new JLabel("Currently Playing: "));
+      currentSong.setText("Put the song that's playing here");
+      currentSongPanel.add(currentSong);
+      
+      currentSongPanel.setLayout(new GridLayout(2, 2, 2, 2));
+      
+      musicController.setLayout(new BorderLayout());
+      musicController.add(content, BorderLayout.SOUTH);
+      musicController.add(currentSongPanel, BorderLayout.NORTH);
       musicController.pack();
+
    }
    
    private void controllerDefaults(PlayerGUI musicController) {
-      musicController.setSize(400,125);      
+      musicController.setSize(400,175);      
       musicController.setTitle("Music Player");
       musicController.setLocationRelativeTo(null);
       musicController.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
